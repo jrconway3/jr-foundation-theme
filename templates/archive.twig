@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="archive-shell">
+  <h1>{{ archive_title ?: 'Archive' }}</h1>
+  {% if archive_description %}
+    <div class="archive-description">{{ archive_description|raw }}</div>
+  {% endif %}
+
+  {% if posts %}
+    {% for post in posts %}
+      <article class="post-card">
+        <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
+        <p>{{ post.preview.length(32).read_more('') }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No archive entries found.</p>
+  {% endif %}
+</section>
+{% endblock %}

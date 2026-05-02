@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<article class="single-page">
+  {% if post %}
+    <h1>{{ post.title }}</h1>
+    <div class="page-content">{{ post.content }}</div>
+  {% else %}
+    <h1>Page not found</h1>
+  {% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="content-shell">
+  <h1>{{ function('single_post_title', '', false) ?: 'Latest Posts' }}</h1>
+  {% if posts %}
+    {% for post in posts %}
+      <article class="post-card">
+        <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
+        <p>{{ post.preview.length(36).read_more('') }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No posts found.</p>
+  {% endif %}
+</section>
+{% endblock %}

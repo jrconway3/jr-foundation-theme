@@ -1,0 +1,17 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="search-shell">
+  <h1>Search Results for "{{ search_query }}"</h1>
+  {% if posts %}
+    {% for post in posts %}
+      <article class="post-card">
+        <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
+        <p>{{ post.preview.length(28).read_more('') }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="not-found-shell">
+  <h1>404</h1>
+  <p>The page you requested could not be found.</p>
+  <p><a href="{{ function('home_url', '/') }}">Return to home</a></p>
+</section>
+{% endblock %}

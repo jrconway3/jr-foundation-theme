@@ -1,0 +1,14 @@
+<header class="site-header">
+  <div class="inner">
+    <p class="site-title"><a href="{{ function('home_url', '/') }}">{{ function('get_bloginfo', 'name') }}</a></p>
+    {% if menu_primary %}
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          {% for item in menu_primary.items %}
+            <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+</header>
