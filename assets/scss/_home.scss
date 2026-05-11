@@ -1,0 +1,138 @@
+@use 'variables' as *;
+
+.home-section {
+  margin-bottom: $gap;
+}
+
+.featured-article {
+  display: flex;
+  gap: 1.25rem;
+  background: mix($accent, $bg-card, 10%);
+  border: 1px solid $accent;
+  border-radius: 4px;
+  padding: 1.25rem;
+  margin-bottom: $gap;
+
+  @media (max-width: $bp-mobile) {
+    flex-direction: column;
+  }
+}
+
+.featured-article-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 220px;
+  height: 165px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+
+  &--placeholder {
+    width: 100%;
+    height: 100%;
+    background: $border;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-hint;
+    font-size: 32px;
+
+    &::after { content: '🎮'; }
+  }
+
+  @media (max-width: $bp-mobile) {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+.featured-badge-type {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background: $accent;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+
+.featured-badge-rating {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: $accent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 2.2rem;
+  padding: 3px 6px;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.featured-article-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.featured-article-title {
+  font-size: 1.1rem;
+  line-height: 1.35;
+
+  a {
+    color: $text;
+    &:hover { color: $accent; }
+  }
+}
+
+.featured-article-excerpt {
+  font-size: 13px;
+  color: $text-muted;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.featured-article-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.featured-article-meta {
+  font-size: 12px;
+  color: $text-hint;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+
+  .meta-category { color: $accent; }
+}
+
+.read-more {
+  font-size: 12px;
+  color: $accent;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover { text-decoration: underline; }
+}
+
+.no-content {
+  color: $text-hint;
+  font-size: 13px;
+}

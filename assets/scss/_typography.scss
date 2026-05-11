@@ -1,0 +1,47 @@
+@use 'variables' as *;
+
+@font-face {
+  font-family: 'Commodore64';
+  src: url('../fonts/commodore-64-6.3.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: $font-body;
+  font-size: 14px;
+  line-height: 1.6;
+  color: $text;
+  background-color: $bg-page;
+}
+
+.section-label {
+  font-family: $font-pixel;
+  font-size: 8px;
+  color: $accent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $text;
+}
+
+h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $text;
+}
+
+p {
+  color: $text-muted;
+  font-size: 14px;
+}
+
+a:hover {
+  color: $accent;
+}

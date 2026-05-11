@@ -1,0 +1,8 @@
+<nav class="filter-bar" aria-label="Content filter">
+  <a class="filter-bar-tab{% if active == 'all' or not active %} filter-bar-tab--active{% endif %}"
+     href="{{ function('get_post_type_archive_link', 'post') }}">All</a>
+  <a class="filter-bar-tab{% if active == 'reviews' %} filter-bar-tab--active{% endif %}"
+     href="{{ function('get_post_type_archive_link', 'review') }}">Reviews</a>
+  <a class="filter-bar-tab{% if active == 'articles' %} filter-bar-tab--active{% endif %}"
+     href="{{ function('get_post_type_archive_link', 'post') }}?filter=articles">Articles</a>
+</nav>

@@ -1,0 +1,125 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div class="home-hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">
+      {% if site_author %}
+        {{ function('get_avatar', site_author.id, 80, '', site_author.display_name) }}
+      {% endif %}
+    </div>
+    <div class="hero-text">
+      <p class="hero-title">{{ site_author ? site_author.display_name : site.name }}</p>
+      <p class="hero-tagline">{{ site.description }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="site-shell">
+  <main class="home-main">
+
+    {% if featured_post %}
+    <h2 class="section-label">Latest</h2>
+    <article class="featured-article">
+      {% if featured_post.thumbnail %}
+      <div class="featured-article-thumb">
+        <img src="{{ featured_post.thumbnail.src('medium') }}" alt="{{ featured_post.thumbnail.alt }}">
+        {% if featured_post.post_type == 'review' %}
+          <span class="featured-badge-type">REVIEW</span>
+          {% if featured_post.meta('jr_review_rating') %}
+            <span class="featured-badge-rating">{{ featured_post.meta('jr_review_rating') }}</span>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="featured-article-body">
+        <h2 class="featured-article-title">
+          <a href="{{ featured_post.link }}">{{ featured_post.title }}</a>
+        </h2>
+        <p class="featured-article-excerpt">{{ featured_post.preview.length(120).read_more(false) }}</p>
+        <div class="featured-article-footer">
+          <p class="featured-article-meta">
+            {% if featured_post.post_type == 'review' %}
+              {% set genre = featured_post.meta('jr_review_genre') %}
+              {% if genre %}<span class="meta-category">{{ genre }}</span><span class="post-card-meta-sep">·</span>{% endif %}
+              {% set platform = featured_post.meta('jr_review_platform') %}
+              {% if platform %}<span>{{ platform }}</span><span class="post-card-meta-sep">·</span>{% endif %}
+            {% else %}
+              {% set cats = featured_post.categories %}
+              {% if cats|length > 0 %}<span class="meta-category">{{ cats[0].name }}</span><span class="post-card-meta-sep">·</span>{% endif %}
+            {% endif %}
+            <time datetime="{{ featured_post.date('Y-m-d') }}">{{ featured_post.date('M j, Y') }}</time>
+          </p>
+          <a href="{{ featured_post.link }}" class="read-more">Read more →</a>
+        </div>
+      </div>
+    </article>
+    {% endif %}
+
+    <section class="home-section">
+      <h2 class="section-label">Recent articles</h2>
+      {% if recent_posts %}
+        <ul class="post-card-list">
+          {% for post in recent_posts %}
+            {% include 'partials/post-card.twig' %}
+          {% endfor %}
+        </ul>
+        <a class="view-all-link" href="{{ function('get_post_type_archive_link', 'post') }}">View all articles</a>
+      {% else %}
+        <p class="no-content">No posts yet.</p>
+      {% endif %}
+    </section>
+
+    {% if playlists %}
+    <section class="playlists-section">
+      <h2 class="section-label">Playlists</h2>
+      <div class="playlist-row">
+        {% for playlist in playlists %}
+        <div class="playlist-card">
+          {% if playlist.label %}
+          <h3 class="playlist-card-title">{{ playlist.label }}</h3>
+          {% endif %}
+          <div class="playlist-card-embed">
+            <iframe
+              src="https://www.youtube.com/embed/videoseries?list={{ playlist.id }}"
+              allowfullscreen
+              title="{{ playlist.label ?: 'Playlist' }}"
+            ></iframe>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </main>
+
+  <aside class="home-sidebar">
+
+    {% if featured_playlist_id %}
+    <section class="sidebar-section sidebar-playlist">
+      <h2 class="section-label">Recent Videos</h2>
+      <div class="playlist-embed">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
+          allowfullscreen
+          title="Featured playlist"
+        ></iframe>
+      </div>
+    </section>
+    {% endif %}
+
+{% if games_list %}
+    <section class="sidebar-section">
+      <h2 class="section-label">My games</h2>
+      <ul class="game-row-list">
+        {% for game in games_list %}
+          {% include 'partials/game-row.twig' %}
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+  </aside>
+</div>
+{% endblock %}

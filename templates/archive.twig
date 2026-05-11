@@ -7,15 +7,16 @@
     <div class="archive-description">{{ archive_description|raw }}</div>
   {% endif %}
 
+  {% include 'partials/filter-bar.twig' with { active: active_filter } %}
+
   {% if posts %}
-    {% for post in posts %}
-      <article class="post-card">
-        <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
-        <p>{{ post.preview.length(32).read_more('') }}</p>
-      </article>
-    {% endfor %}
+    <ul class="post-card-list">
+      {% for post in posts %}
+        {% include 'partials/post-card.twig' %}
+      {% endfor %}
+    </ul>
   {% else %}
-    <p>No archive entries found.</p>
+    <p class="no-content">No entries found.</p>
   {% endif %}
 </section>
 {% endblock %}

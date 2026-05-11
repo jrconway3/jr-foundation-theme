@@ -1,0 +1,41 @@
+@use 'variables' as *;
+
+.home-hero {
+  background-color: $bg-surface;
+  border-bottom: 1px solid $border;
+  padding: 1.25rem $gap;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.hero-avatar {
+  img,
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid $accent;
+    object-fit: cover;
+  }
+}
+
+.hero-text {
+  .hero-title {
+    font-family: $font-pixel;
+    font-size: 13px;
+    color: $accent;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+    color: $text-muted;
+
+    strong { color: $accent; font-weight: 500; }
+  }
+}

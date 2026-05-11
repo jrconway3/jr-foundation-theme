@@ -1,0 +1,67 @@
+@use 'variables' as *;
+
+.single-post {
+  max-width: 680px;
+  padding: $gap;
+}
+
+.post-thumbnail {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.review-rating-banner {
+  margin-bottom: 0.5rem;
+}
+
+.review-meta-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.5rem 0 1rem;
+  padding: 0.75rem;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 4px;
+}
+
+.review-meta-item {
+  font-size: 12px;
+  color: $text-muted;
+}
+
+.review-meta-label {
+  color: $text-hint;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.post-tax-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: $text-muted;
+  margin-bottom: 1rem;
+
+  a:hover { color: $accent; }
+}
+
+.post-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: $text;
+  margin-top: 1rem;
+
+  p  { margin-bottom: 1em; color: $text-muted; }
+  h2,
+  h3 { margin: 1.5em 0 0.5em; color: $text; }
+  a  { color: $accent; &:hover { text-decoration: underline; } }
+  img { border-radius: 4px; margin: 1em 0; }
+}

@@ -1,14 +1,12 @@
 <footer class="site-footer">
-  <div class="inner">
-    {% if menu_footer %}
-      <nav class="footer-nav" aria-label="Footer">
-        <ul>
-          {% for item in menu_footer.items %}
-            <li><a href="{{ item.link }}">{{ item.title }}</a></li>
-          {% endfor %}
-        </ul>
+  <div class="footer-inner">
+    <p class="footer-copy">&copy; {{ 'now'|date('Y') }} JaidynReiman</p>
+    {% if menu_social %}
+      <nav class="footer-links" aria-label="Social links">
+        {% for item in menu_social.items %}
+          <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+        {% endfor %}
       </nav>
     {% endif %}
-    <p>&copy; {{ 'now'|date('Y') }} {{ function('get_bloginfo', 'name') }}</p>
   </div>
 </footer>

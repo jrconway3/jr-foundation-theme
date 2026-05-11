@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+.site-shell {
+  display: grid;
+  grid-template-columns: 1fr $sidebar-width;
+  gap: $gap;
+  width: 100%;
+  padding: $gap;
+
+  @media (max-width: $bp-mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-main,
+.archive-shell,
+.single-post,
+.single-page {
+  min-width: 0;
+}
+
+.home-sidebar {
+  @media (max-width: $bp-mobile) {
+    order: 1;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.admin-bar {
+    min-height: calc(100vh - 32px);
+
+    @media screen and (max-width: 782px) {
+      min-height: calc(100vh - 46px);
+    }
+  }
+}
+
+.site-main {
+  flex: 1;
+}

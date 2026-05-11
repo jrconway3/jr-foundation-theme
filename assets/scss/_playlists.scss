@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+.playlists-section {
+  margin-top: $gap;
+  border-top: 1px solid $border;
+  padding-top: $gap;
+}
+
+.playlist-row {
+  display: flex;
+  gap: $gap;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: $border transparent;
+
+  &::-webkit-scrollbar { height: 4px; }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 2px;
+  }
+}
+
+.playlist-card {
+  flex: 0 0 400px;
+}
+
+.playlist-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-muted;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-card-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: $bg-surface;
+  border-radius: 3px;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}

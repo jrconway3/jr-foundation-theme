@@ -1,0 +1,30 @@
+<li class="post-card">
+  {% if post.thumbnail %}
+  <div class="post-card-thumb">
+    <img src="{{ post.thumbnail.src('thumbnail') }}" alt="{{ post.thumbnail.alt }}">
+  </div>
+  {% endif %}
+  <div class="post-card-body">
+    {% if post.post_type == 'review' %}
+    <span class="post-card-tag post-card-tag--review">REVIEW</span>
+    {% endif %}
+    <h3 class="post-card-title">
+      <a href="{{ post.link }}">{{ post.title }}
+        {% if post.post_type == 'review' and post.meta('jr_review_rating') %}
+          <span class="rating-badge">{{ post.meta('jr_review_rating') }}</span>
+        {% endif %}
+      </a>
+    </h3>
+    <p class="post-card-meta">
+      <time datetime="{{ post.date('Y-m-d') }}">{{ post.date('M j, Y') }}</time>
+      {% set genre = post.meta('jr_review_genre') %}
+      {% if genre %}
+        <span class="post-card-meta-sep">·</span>{{ genre }}
+      {% endif %}
+      {% set platform = post.meta('jr_review_platform') %}
+      {% if platform %}
+        <span class="post-card-meta-sep">·</span>{{ platform }}
+      {% endif %}
+    </p>
+  </div>
+</li>

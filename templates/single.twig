@@ -3,7 +3,44 @@
 {% block content %}
 <article class="single-post">
   {% if post %}
+    {% if post.thumbnail %}
+      <img class="post-thumbnail" src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt }}">
+    {% endif %}
+    {% if post.post_type == 'review' and post.meta('jr_review_rating') %}
+      <div class="review-rating-banner">
+        <span class="rating-badge rating-badge--large">{{ post.meta('jr_review_rating') }}</span>
+      </div>
+    {% endif %}
     <h1>{{ post.title }}</h1>
+    {% if post.post_type == 'review' %}
+      <div class="review-meta-block">
+        {% if post.meta('jr_review_platform') %}
+          <span class="review-meta-item"><span class="review-meta-label">Platform</span> {{ post.meta('jr_review_platform') }}</span>
+        {% endif %}
+        {% if post.meta('jr_review_genre') %}
+          <span class="review-meta-item"><span class="review-meta-label">Genre</span> {{ post.meta('jr_review_genre') }}</span>
+        {% endif %}
+        {% if post.meta('jr_review_playtime') %}
+          <span class="review-meta-item"><span class="review-meta-label">Play time</span> {{ post.meta('jr_review_playtime') }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% set categories = post.terms('category') %}
+    {% set games = post.terms('games') %}
+    {% if categories or games %}
+      <div class="post-tax-meta">
+        {% if games %}
+          <span class="post-games">
+            {% for game in games %}<a href="{{ game.link }}">{{ game.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        {% endif %}
+        {% if categories %}
+          <span class="post-categories">
+            {% for cat in categories %}<a href="{{ cat.link }}">{{ cat.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
     <div class="post-content">{{ post.content }}</div>
   {% else %}
     <h1>Post not found</h1>

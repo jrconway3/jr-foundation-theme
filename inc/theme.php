@@ -14,6 +14,7 @@ add_action(
 	function () {
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
+		add_theme_support( 'custom-logo' );
 		add_theme_support(
 			'html5',
 			array(
@@ -31,24 +32,9 @@ add_action(
 			array(
 				'primary' => __( 'Primary Menu', 'jr-theme-foundation' ),
 				'footer'  => __( 'Footer Menu', 'jr-theme-foundation' ),
+				'social'  => __( 'Social Links', 'jr-theme-foundation' ),
 			)
 		);
 	}
 );
 
-add_action(
-	'widgets_init',
-	function () {
-		register_sidebar(
-			array(
-				'name'          => __( 'Footer Widget Area', 'jr-theme-foundation' ),
-				'id'            => 'footer-1',
-				'description'   => __( 'Footer widgets for the foundation theme.', 'jr-theme-foundation' ),
-				'before_widget' => '<section class="widget %2$s" id="%1$s">',
-				'after_widget'  => '</section>',
-				'before_title'  => '<h3 class="widget-title">',
-				'after_title'   => '</h3>',
-			)
-		);
-	}
-);
