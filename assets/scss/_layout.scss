@@ -19,7 +19,8 @@
   min-width: 0;
 }
 
-.home-sidebar {
+.home-sidebar,
+.single-sidebar {
   @media (max-width: $bp-mobile) {
     order: 1;
   }

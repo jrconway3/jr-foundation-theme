@@ -1,49 +1,171 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-<article class="single-post">
-  {% if post %}
+<div class="site-shell">
+
+  <article class="single-post">
+
+    {# Breadcrumb #}
+    <nav class="post-breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="{{ function('get_post_type_archive_link', 'post') }}">Articles</a></li>
+        {% if post.post_type == 'review' %}
+          <li><a href="{{ function('get_post_type_archive_link', 'review') }}">Reviews</a></li>
+        {% endif %}
+        <li aria-current="page">{{ post.title }}</li>
+      </ol>
+    </nav>
+
+    {# Title + header meta #}
+    <h1 class="post-title">{{ post.title }}</h1>
+
+    <div class="post-header-meta">
+      {% if post.post_type == 'review' %}
+        <span class="post-type-badge badge-review">REVIEW</span>
+      {% else %}
+        <span class="post-type-badge badge-article">ARTICLE</span>
+      {% endif %}
+      <time class="post-date" datetime="{{ post.date('Y-m-d') }}">{{ post.date('M j, Y') }}</time>
+      {% if reading_time %}
+        <span class="post-read-time">· {{ reading_time }} min read</span>
+      {% endif %}
+      {% set games = post.terms('games') %}
+      {% if games %}
+        {% for game in games %}
+          <a class="post-game-chip" href="{{ game.link }}">{{ game.title }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <hr class="post-divider">
+
+    <div class="post-body">
+
+    {# Featured image — floats top-left on desktop, full-width on mobile #}
     {% if post.thumbnail %}
-      <img class="post-thumbnail" src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt }}">
-    {% endif %}
-    {% if post.post_type == 'review' and post.meta('jr_review_rating') %}
-      <div class="review-rating-banner">
-        <span class="rating-badge rating-badge--large">{{ post.meta('jr_review_rating') }}</span>
+      <div class="post-thumbnail-wrap">
+        <img class="post-thumbnail" src="{{ post.thumbnail.src('large') }}" alt="{{ post.thumbnail.alt }}">
       </div>
     {% endif %}
-    <h1>{{ post.title }}</h1>
+
+    {# Review meta block #}
     {% if post.post_type == 'review' %}
+      {% set rating    = post.meta('jr_review_rating') %}
+      {% set summary   = post.meta('jr_review_summary') %}
+      {% set platform  = post.meta('jr_review_platform') %}
+      {% set genre     = post.meta('jr_review_genre') %}
+      {% set developer = post.meta('jr_review_developer') %}
+      {% set playtime  = post.meta('jr_review_playtime') %}
       <div class="review-meta-block">
-        {% if post.meta('jr_review_platform') %}
-          <span class="review-meta-item"><span class="review-meta-label">Platform</span> {{ post.meta('jr_review_platform') }}</span>
+        {% if rating %}
+          <div class="review-score-row">
+            <div class="review-score-circle">
+              <span class="score-num">{{ rating }}</span>
+              <span class="score-denom">/10</span>
+            </div>
+            {% if summary %}
+              <p class="review-score-summary">{{ summary }}</p>
+            {% endif %}
+          </div>
         {% endif %}
-        {% if post.meta('jr_review_genre') %}
-          <span class="review-meta-item"><span class="review-meta-label">Genre</span> {{ post.meta('jr_review_genre') }}</span>
-        {% endif %}
-        {% if post.meta('jr_review_playtime') %}
-          <span class="review-meta-item"><span class="review-meta-label">Play time</span> {{ post.meta('jr_review_playtime') }}</span>
+        {% if platform or genre or developer or playtime %}
+          <div class="review-meta-cols">
+            {% if platform %}
+              <div class="review-meta-item">
+                <span class="review-meta-label">PLATFORM</span>
+                <span class="review-meta-value">{{ platform }}</span>
+              </div>
+            {% endif %}
+            {% if genre %}
+              <div class="review-meta-item">
+                <span class="review-meta-label">GENRE</span>
+                <span class="review-meta-value">{{ genre }}</span>
+              </div>
+            {% endif %}
+            {% if developer %}
+              <div class="review-meta-item">
+                <span class="review-meta-label">DEVELOPER</span>
+                <span class="review-meta-value">{{ developer }}</span>
+              </div>
+            {% endif %}
+            {% if playtime %}
+              <div class="review-meta-item">
+                <span class="review-meta-label">PLAY TIME</span>
+                <span class="review-meta-value">{{ playtime }}</span>
+              </div>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
     {% endif %}
-    {% set categories = post.terms('category') %}
-    {% set games = post.terms('games') %}
-    {% if categories or games %}
-      <div class="post-tax-meta">
-        {% if games %}
-          <span class="post-games">
-            {% for game in games %}<a href="{{ game.link }}">{{ game.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-          </span>
-        {% endif %}
-        {% if categories %}
-          <span class="post-categories">
-            {% for cat in categories %}<a href="{{ cat.link }}">{{ cat.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-          </span>
-        {% endif %}
-      </div>
-    {% endif %}
+
+    {# Post content #}
     <div class="post-content">{{ post.content }}</div>
-  {% else %}
-    <h1>Post not found</h1>
-  {% endif %}
-</article>
+
+    </div>{# /.post-body #}
+
+    <hr class="post-divider">
+
+    {# Tags #}
+    {% set tags = post.tags %}
+    {% if tags %}
+      <div class="post-tags">
+        <span class="post-tags-label">Tags:</span>
+        {% for tag in tags %}
+          <a class="post-tag-chip" href="{{ tag.link }}">{{ tag.title }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# Prev / next navigation #}
+    <nav class="post-navigation" aria-label="Post navigation">
+      {% set prev_post = post.prev() %}
+      {% set next_post = post.next() %}
+      {% if prev_post %}
+        <a class="post-nav-link post-nav-prev" href="{{ prev_post.link }}">
+          <span class="post-nav-dir">← Previous</span>
+          <span class="post-nav-title">{{ prev_post.title }}</span>
+        </a>
+      {% else %}
+        <span class="post-nav-link post-nav-prev post-nav-empty"></span>
+      {% endif %}
+      {% if next_post %}
+        <a class="post-nav-link post-nav-next" href="{{ next_post.link }}">
+          <span class="post-nav-dir">Next →</span>
+          <span class="post-nav-title">{{ next_post.title }}</span>
+        </a>
+      {% else %}
+        <span class="post-nav-link post-nav-next post-nav-empty"></span>
+      {% endif %}
+    </nav>
+
+  </article>
+
+  {# Sidebar #}
+  <aside class="single-sidebar">
+    {% if featured_playlist_id %}
+      <section class="sidebar-section sidebar-playlist">
+        <h2 class="section-label">Featured playlist</h2>
+        <div class="playlist-embed">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
+            allowfullscreen
+            title="Featured playlist"
+          ></iframe>
+        </div>
+      </section>
+    {% endif %}
+    {% if games_list %}
+      <section class="sidebar-section">
+        <h2 class="section-label">My games</h2>
+        <ul class="game-row-list">
+          {% for game in games_list %}
+            {% include 'partials/game-row.twig' %}
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </aside>
+
+</div>
 {% endblock %}

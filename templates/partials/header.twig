@@ -1,3 +1,21 @@
+{% macro nav_item(item) %}
+  {% import _self as m %}
+  <li class="nav-item{% if item.children %} has-children{% endif %}{% if item.current %} is-current{% endif %}{% if item.current_item_ancestor %} is-ancestor{% endif %}">
+    <a href="{{ item.link }}"{% if item.current %} aria-current="page"{% endif %}>
+      {{ item.title }}
+    </a>
+    {% if item.children %}
+      <ul class="nav-dropdown">
+        {% for child in item.children %}
+          {{ m.nav_item(child) }}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}
+
+{% import _self as nav_macros %}
+
 <header class="site-header">
   <div class="header-inner">
     <a class="site-logo" href="{{ function('home_url', '/') }}" aria-label="JRPlays home">
@@ -5,9 +23,9 @@
     </a>
     {% if menu_primary %}
       <nav class="primary-nav" aria-label="Primary">
-        <ul>
+        <ul class="nav-list">
           {% for item in menu_primary.items %}
-            <li><a href="{{ item.link }}"{% if item.current %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+            {{ nav_macros.nav_item(item) }}
           {% endfor %}
         </ul>
       </nav>

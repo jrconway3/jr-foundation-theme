@@ -1,9 +1,15 @@
 @use 'variables' as *;
 
+$dropdown-bg:       #1a1a1a;
+$dropdown-hover-bg: rgba(255, 255, 255, 0.07);
+$dropdown-width:    190px;
+$dropdown-shadow:   0 8px 24px rgba(0, 0, 0, 0.55);
+
+// ── Header shell ──────────────────────────────────────────────────────────────
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 200;
   background-color: $bg-surface;
   border-bottom: 1px solid $border;
   height: $nav-height;
@@ -12,44 +18,165 @@
 .header-inner {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
   width: 100%;
   padding: 0 $gap;
   height: 100%;
+  gap: 0;
 }
 
+// ── Logo ──────────────────────────────────────────────────────────────────────
 .site-logo {
   font-family: $font-pixel;
   font-size: 13px;
   flex-shrink: 0;
+  margin-right: 1.5rem;
 
   .logo-jr    { color: $accent; }
   .logo-plays { color: $text; }
 }
 
+// ── Nav container ─────────────────────────────────────────────────────────────
 .primary-nav {
   flex: 1;
+  height: 100%;
+  min-width: 0;
+}
 
-  ul {
+.nav-list {
+  display: flex;
+  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// ── Shared nav-item rules ─────────────────────────────────────────────────────
+.nav-item {
+  position: relative;
+
+  > a {
     display: flex;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    color: $text-muted;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 0.12s, background-color 0.12s;
   }
 
-  a {
-    font-size: 13px;
-    color: $text-muted;
-    transition: color 0.15s;
-
-    &:hover,
-    &[aria-current="page"] {
-      color: $text;
-    }
+  // chevron via ::after — points down for top-level, right for nested
+  &.has-children > a::after {
+    content: '▾';
+    font-size: 9px;
+    color: $text-hint;
+    line-height: 1;
   }
 }
 
+// ── Top-level items ───────────────────────────────────────────────────────────
+.nav-list > .nav-item {
+  display: flex;
+  align-items: center;
+
+  > a {
+    height: 100%;
+    padding: 0 0.75rem;
+    border-radius: 0;
+
+    &:hover { color: $text; }
+  }
+
+  // active underline via box-shadow (doesn't interfere with ::after chevron)
+  &.is-current > a,
+  &.is-ancestor > a {
+    color: $text;
+    box-shadow: inset 0 -2px 0 $accent;
+  }
+
+  // chevron for top-level doesn't need to change — ▾ is already correct
+}
+
+// ── Dropdown panel ────────────────────────────────────────────────────────────
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: $dropdown-width;
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+  background: $dropdown-bg;
+  border: 1px solid $border;
+  border-radius: 6px;
+  box-shadow: $dropdown-shadow;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s, visibility 0.12s;
+
+  // sub-menus fly out to the right
+  .nav-dropdown {
+    top: -5px;
+    left: 100%;
+    margin-left: 4px;
+  }
+
+  .nav-item > a {
+    padding: 7px 10px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 13px;
+    color: $text-muted;
+  }
+
+  // items with sub-menus get a right-pointing chevron
+  .nav-item.has-children > a::after {
+    content: '›';
+    font-size: 14px;
+    margin-left: auto;
+    padding-left: 0.5rem;
+    color: $text-hint;
+  }
+
+  // hover + selected states inside dropdowns
+  .nav-item > a:hover,
+  .nav-item.is-current > a,
+  .nav-item.is-ancestor > a {
+    color: $accent;
+    background-color: $dropdown-hover-bg;
+  }
+
+  // first item in any dropdown level always has red text
+  > .nav-item:first-child > a {
+    color: $accent;
+
+    &:hover { background-color: $dropdown-hover-bg; }
+  }
+}
+
+// show on hover
+.nav-item:hover > .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+// keep parent dropdown visible when hovering into a sub-dropdown
+.nav-item:hover > a {
+  color: $text;
+}
+
+.nav-dropdown .nav-item:hover > a {
+  color: $accent;
+}
+
+// ── Search + hamburger ────────────────────────────────────────────────────────
 .nav-search-btn {
   color: $text-muted;
   margin-left: auto;
+  flex-shrink: 0;
 
   &:hover { color: $text; }
 }
@@ -60,6 +187,7 @@
   gap: 4px;
   padding: 4px;
   color: $text-muted;
+  flex-shrink: 0;
 
   span {
     display: block;
@@ -68,18 +196,11 @@
     background: currentColor;
     border-radius: 1px;
   }
-
-  @media (max-width: $bp-mobile) {
-    display: flex;
-  }
 }
 
+// ── Mobile ────────────────────────────────────────────────────────────────────
 @media (max-width: $bp-mobile) {
-  .primary-nav {
-    display: none;
-  }
-
-  .nav-search-btn {
-    margin-left: auto;
-  }
+  .primary-nav { display: none; }
+  .nav-search-btn { margin-left: auto; }
+  .nav-hamburger { display: flex; }
 }
