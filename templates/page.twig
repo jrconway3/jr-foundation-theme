@@ -1,12 +1,46 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-<article class="single-page">
-  {% if post %}
-    <h1>{{ post.title }}</h1>
-    <div class="page-content">{{ post.content }}</div>
-  {% else %}
-    <h1>Page not found</h1>
-  {% endif %}
-</article>
+<div class="site-shell">
+
+  <article class="single-post">
+
+    <h1 class="post-title">{{ post.title }}</h1>
+
+    <div class="post-header-meta">
+      <time class="post-date" datetime="{{ post.date('Y-m-d') }}">{{ post.date('M j, Y') }}</time>
+    </div>
+
+    <hr class="post-divider">
+
+    <div class="post-body">
+
+      {% if post.thumbnail %}
+        <div class="post-thumbnail-wrap">
+          <img class="post-thumbnail" src="{{ post.thumbnail.src('large') }}" alt="{{ post.thumbnail.alt }}">
+        </div>
+      {% endif %}
+
+      <div class="post-content">{{ post.content }}</div>
+
+    </div>{# /.post-body #}
+
+  </article>
+
+  <aside class="single-sidebar">
+    {% if featured_playlist_id %}
+      <section class="sidebar-section sidebar-playlist">
+        <h2 class="section-label">Featured playlist</h2>
+        <div class="playlist-embed">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
+            allowfullscreen
+            title="Featured playlist"
+          ></iframe>
+        </div>
+      </section>
+    {% endif %}
+  </aside>
+
+</div>
 {% endblock %}
