@@ -34,6 +34,12 @@ add_filter(
 		$context['menu_social']  = ! empty( $nav_locations['social'] ) ? \Timber\Timber::get_menu( (int) $nav_locations['social'] ) : null;
 		$admin_users            = get_users( array( 'role' => 'administrator', 'number' => 1, 'orderby' => 'ID', 'order' => 'ASC' ) );
 		$context['site_author'] = ! empty( $admin_users ) ? \Timber\Timber::get_user( $admin_users[0]->ID ) : null;
+		$context['yt_channel'] = array(
+			'handle'           => get_option( 'jr_yt_channel_handle', '' ),
+			'url'              => get_option( 'jr_yt_channel_url', '' ),
+			'subscriber_count' => (int) get_option( 'jr_yt_subscriber_count', 0 ),
+			'video_count'      => (int) get_option( 'jr_yt_video_count', 0 ),
+		);
 		$context['games_list']  = \Timber\Timber::get_terms(
 			array(
 				'taxonomy'   => 'games',

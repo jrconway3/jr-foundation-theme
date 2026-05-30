@@ -18,7 +18,15 @@
 <div class="site-shell">
   <main class="home-main">
 
-    {% if featured_post %}
+    {% if live_stream %}
+    <div class="live-stream-takeover">
+      <span class="live-badge">LIVE NOW</span>
+      <h2 class="section-label">{{ live_stream.title }}</h2>
+      <div class="live-embed">
+        <iframe src="{{ live_stream.embed_url }}" allowfullscreen title="{{ live_stream.title }}"></iframe>
+      </div>
+    </div>
+    {% elseif featured_post %}
     <h2 class="section-label">Latest</h2>
     <article class="featured-article">
       {% if featured_post.thumbnail %}

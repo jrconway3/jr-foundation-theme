@@ -33,6 +33,9 @@ if ( class_exists( '\\Timber\\Timber' ) ) {
 	$context['recent_posts']         = array_slice( $posts_arr, 1 );
 	$context['featured_playlist_id'] = get_option( 'jr_featured_playlist_id', '' );
 
+	$live                   = get_option( 'jr_live_stream' );
+	$context['live_stream'] = ( ! empty( $live['active'] ) ) ? $live : null;
+
 	$playlists_raw            = get_option( 'jr_playlists', '[]' );
 	$decoded                  = json_decode( $playlists_raw, true );
 	$context['playlists']     = is_array( $decoded ) ? $decoded : array();
