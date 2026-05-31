@@ -12,7 +12,7 @@
   <div class="page-profile-info">
     <h1 class="page-title">{{ post.title }}</h1>
     {% if post.excerpt %}
-    <p class="page-subtitle">{{ post.excerpt|striptags }}</p>
+    <p class="page-subtitle">{{ post.excerpt|striptags|e }}</p>
     {% endif %}
   </div>
 </div>
