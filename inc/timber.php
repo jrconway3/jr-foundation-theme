@@ -35,6 +35,7 @@ add_filter(
 		$admin_users            = get_users( array( 'role' => 'administrator', 'number' => 1, 'orderby' => 'ID', 'order' => 'ASC' ) );
 		$context['site_author'] = ! empty( $admin_users ) ? \Timber\Timber::get_user( $admin_users[0]->ID ) : null;
 		$context['yt_channel'] = array(
+			'name'             => get_option( 'jr_yt_channel_name', '' ),
 			'handle'           => get_option( 'jr_yt_channel_handle', '' ),
 			'url'              => get_option( 'jr_yt_channel_url', '' ),
 			'subscriber_count' => (int) get_option( 'jr_yt_subscriber_count', 0 ),

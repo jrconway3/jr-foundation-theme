@@ -12,16 +12,12 @@
       <p class="hero-title">{{ site_author ? site_author.display_name : site.name }}</p>
       <p class="hero-tagline">{{ site.description }}</p>
     </div>
-    {% if yt_channel.handle %}
+    {% if yt_channel.handle or yt_channel.name %}
     <div class="hero-channel">
-      <p class="hero-channel-name">{{ yt_channel.handle|e }}</p>
-      <p class="hero-channel-stats">
-        {{ yt_channel.subscriber_count|number_format }} subscribers
-        &middot;
-        {{ yt_channel.video_count|number_format }} videos
-      </p>
+      <p class="hero-channel-name">{{ (yt_channel.name ?: yt_channel.handle)|e }}</p>
+      <p class="hero-channel-stats">{{ yt_channel.subscriber_count|number_format }} subscribers &middot; {{ yt_channel.video_count|number_format }} videos</p>
       {% if yt_channel.url %}
-      <a href="{{ function('esc_url', yt_channel.url) }}" class="hero-channel-link" target="_blank" rel="noopener noreferrer">Visit channel</a>
+      <a href="{{ function('esc_url', yt_channel.url) }}" class="hero-channel-link" target="_blank" rel="noopener noreferrer">Visit channel ↗</a>
       {% endif %}
     </div>
     {% endif %}

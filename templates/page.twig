@@ -1,45 +1,55 @@
 {% extends 'base.twig' %}
 
 {% block content %}
+
+{% if post.thumbnail or post.title %}
+<div class="page-profile-header">
+  {% if post.thumbnail %}
+  <div class="page-profile-thumb">
+    <img src="{{ function('esc_url', post.thumbnail.src('thumbnail')) }}" alt="{{ post.thumbnail.alt|e('html_attr') }}">
+  </div>
+  {% endif %}
+  <div class="page-profile-info">
+    <h1 class="page-title">{{ post.title|e }}</h1>
+    {% if post.excerpt %}
+    <p class="page-subtitle">{{ post.excerpt|striptags|e }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
 <div class="site-shell">
 
-  <article class="single-post">
-
-    <h1 class="post-title">{{ post.title }}</h1>
-
-    <div class="post-header-meta">
-      <time class="post-date" datetime="{{ post.date('Y-m-d') }}">{{ post.date('M j, Y') }}</time>
-    </div>
-
-    <hr class="post-divider">
-
-    <div class="post-body">
-
-      {% if post.thumbnail %}
-        <div class="post-thumbnail-wrap">
-          <img class="post-thumbnail" src="{{ post.thumbnail.src('large') }}" alt="{{ post.thumbnail.alt }}">
-        </div>
-      {% endif %}
-
-      <div class="post-content">{{ post.content }}</div>
-
-    </div>{# /.post-body #}
-
+  <article class="single-post single-page">
+    <div class="post-content page-content">{{ post.content }}</div>
   </article>
 
   <aside class="single-sidebar">
-    {% if featured_playlist_id %}
-      <section class="sidebar-section sidebar-playlist">
-        <h2 class="section-label">Featured playlist</h2>
-        <div class="playlist-embed">
-          <iframe
-            src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
-            allowfullscreen
-            title="Featured playlist"
-          ></iframe>
-        </div>
-      </section>
+
+    {% if games_list %}
+    <section class="sidebar-section">
+      <h2 class="section-label">My games</h2>
+      <ul class="game-row-list">
+        {% for game in games_list %}
+          {% include 'partials/game-row.twig' %}
+        {% endfor %}
+      </ul>
+    </section>
     {% endif %}
+
+    {% if featured_playlist_id %}
+    <section class="sidebar-section sidebar-playlist">
+      <h2 class="section-label">Featured playlist</h2>
+      <div class="playlist-embed">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id|url_encode }}"
+          allowfullscreen
+          title="Featured playlist"
+        ></iframe>
+      </div>
+    </section>
+    {% endif %}
+
   </aside>
 
 </div>

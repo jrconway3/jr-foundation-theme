@@ -136,3 +136,34 @@
   color: $text-hint;
   font-size: 13px;
 }
+
+.live-stream-takeover {
+  margin-bottom: $gap;
+}
+
+.live-badge {
+  display: inline-block;
+  background: $accent;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.live-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; // 16:9
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
