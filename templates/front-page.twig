@@ -21,7 +21,7 @@
         {{ yt_channel.video_count|number_format }} videos
       </p>
       {% if yt_channel.url %}
-      <a href="{{ yt_channel.url }}" class="hero-channel-link" target="_blank" rel="noopener noreferrer">Visit channel</a>
+      <a href="{{ function('esc_url', yt_channel.url) }}" class="hero-channel-link" target="_blank" rel="noopener noreferrer">Visit channel</a>
       {% endif %}
     </div>
     {% endif %}
@@ -36,7 +36,7 @@
       <span class="live-badge">LIVE NOW</span>
       <h2 class="section-label">{{ live_stream.title }}</h2>
       <div class="live-embed">
-        <iframe src="{{ live_stream.embed_url }}" allowfullscreen title="{{ live_stream.title }}"></iframe>
+        <iframe src="{{ function('esc_url', live_stream.embed_url) }}" allowfullscreen title="{{ live_stream.title|e }}"></iframe>
       </div>
     </div>
     {% elseif featured_post %}
