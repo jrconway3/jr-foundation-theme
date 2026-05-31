@@ -14,7 +14,7 @@
     </div>
     {% if yt_channel.handle %}
     <div class="hero-channel">
-      <p class="hero-channel-name">{{ yt_channel.handle }}</p>
+      <p class="hero-channel-name">{{ yt_channel.handle|e }}</p>
       <p class="hero-channel-stats">
         {{ yt_channel.subscriber_count|number_format }} subscribers
         &middot;
@@ -34,7 +34,7 @@
     {% if live_stream %}
     <div class="live-stream-takeover">
       <span class="live-badge">LIVE NOW</span>
-      <h2 class="section-label">{{ live_stream.title }}</h2>
+      <h2 class="section-label">{{ live_stream.title|e }}</h2>
       <div class="live-embed">
         <iframe src="{{ function('esc_url', live_stream.embed_url) }}" allowfullscreen title="{{ live_stream.title|e }}"></iframe>
       </div>
