@@ -1,3 +1,4 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 @use 'reset';
 @use 'typography';
 @use 'layout';
@@ -9,3 +10,4 @@
 @use 'home';
 @use 'playlists';
 @use 'single';
+@use 'page';

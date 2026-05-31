@@ -1,0 +1,95 @@
+@use 'variables' as *;
+
+// ── Page profile header ───────────────────────────────────────────────────────
+.page-profile-header {
+  background-color: $bg-surface;
+  border-bottom: 1px solid $border;
+  padding: 1.5rem $gap;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.page-profile-thumb {
+  flex-shrink: 0;
+
+  img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px solid $accent;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.page-profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 0.3rem;
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: $text-muted;
+  margin: 0 0 0.75rem;
+}
+
+.page-header-content {
+  margin-top: 0.5rem;
+}
+
+// ── Button rows ───────────────────────────────────────────────────────────────
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid $border;
+  text-decoration: none;
+  cursor: default;
+  color: $text-muted;
+  background: transparent;
+
+  &.btn--link {
+    color: $accent;
+    border-color: $accent;
+    cursor: pointer;
+
+    &:hover { background: rgba($accent, 0.08); }
+  }
+
+  &.btn--tag {
+    color: $text-muted;
+    border-color: $border;
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  // Platform colours
+  &.btn--youtube  { color: #ff0000; border-color: #ff0000; &:hover { background: rgba(#ff0000, 0.08); } }
+  &.btn--twitch   { color: #9146ff; border-color: #9146ff; &:hover { background: rgba(#9146ff, 0.08); } }
+  &.btn--discord  { color: #5865f2; border-color: #5865f2; &:hover { background: rgba(#5865f2, 0.08); } }
+  &.btn--kofi     { color: #29abe0; border-color: #29abe0; &:hover { background: rgba(#29abe0, 0.08); } }
+}
+
+// ── Page content extra layout ─────────────────────────────────────────────────
+.page-content {
+  .btn-row { margin: 0.75rem 0; }
+}
