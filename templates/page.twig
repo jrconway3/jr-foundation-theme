@@ -37,19 +37,6 @@
     </section>
     {% endif %}
 
-    {% if featured_playlist_id %}
-    <section class="sidebar-section sidebar-playlist">
-      <h2 class="section-label">Featured playlist</h2>
-      <div class="playlist-embed">
-        <iframe
-          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id|url_encode }}"
-          allowfullscreen
-          title="Featured playlist"
-        ></iframe>
-      </div>
-    </section>
-    {% endif %}
-
   </aside>
 
 </div>

@@ -87,25 +87,12 @@
       {% endif %}
     </section>
 
-    {% if playlists %}
+    {% if home_playlists %}
     <section class="playlists-section">
       <h2 class="section-label">Playlists</h2>
-      <div class="playlist-row">
-        {% for playlist in playlists %}
-        <div class="playlist-card">
-          {% if playlist.label %}
-          <h3 class="playlist-card-title">{{ playlist.label }}</h3>
-          {% endif %}
-          <div class="playlist-card-embed">
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list={{ playlist.id }}"
-              allowfullscreen
-              title="{{ playlist.label ?: 'Playlist' }}"
-            ></iframe>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+      {% for playlist in home_playlists %}
+        {% include 'partials/playlist-carousel.twig' %}
+      {% endfor %}
     </section>
     {% endif %}
 
@@ -113,17 +100,8 @@
 
   <aside class="home-sidebar">
 
-    {% if featured_playlist_id %}
-    <section class="sidebar-section sidebar-playlist">
-      <h2 class="section-label">Recent Videos</h2>
-      <div class="playlist-embed">
-        <iframe
-          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
-          allowfullscreen
-          title="Featured playlist"
-        ></iframe>
-      </div>
-    </section>
+    {% if sidebar_playlist %}
+      {% include 'partials/sidebar-playlist.twig' %}
     {% endif %}
 
 {% if games_list %}

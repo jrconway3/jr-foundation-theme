@@ -51,22 +51,115 @@
   padding: 1px 6px;
 }
 
-// Playlist embed in sidebar
-.sidebar-playlist .playlist-embed {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  background: $bg-surface;
-  border-radius: 3px;
+// Sidebar playlist panel (CPT-powered, replaces old iframe embed)
+.sidebar-pl-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
 
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+.sidebar-pl-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text;
+  text-decoration: none;
+  line-height: 1.35;
+
+  &:hover { color: $accent; }
+}
+
+.sidebar-pl-count {
+  font-size: 11px;
+  color: $text-muted;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sidebar-video-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-video-item {
+  border-bottom: 1px solid $border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.sidebar-video-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .sidebar-video-title { color: $accent; }
+}
+
+.sidebar-video-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  aspect-ratio: 16 / 9;
+  background: $bg-surface;
+  border-radius: 2px;
+  overflow: hidden;
+
+  img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    display: block;
   }
+}
+
+.sidebar-video-thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  background: $border;
+}
+
+.sidebar-video-duration {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 3px;
+  border-radius: 2px;
+  pointer-events: none;
+  line-height: 1.3;
+}
+
+.sidebar-video-title {
+  font-size: 12px;
+  color: $text-muted;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s;
+}
+
+.sidebar-pl-view-all {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 12px;
+  color: $accent;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
 }
 
 // YouTube card

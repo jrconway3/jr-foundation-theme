@@ -1,1 +1,51 @@
 document.documentElement.classList.add('jr-theme-foundation-ready');
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Collapse an active video card and clear its iframe src.
+  function collapseCard(card) {
+    var toggle = card.querySelector('.video-card__toggle');
+    var embed  = card.querySelector('.video-card__embed');
+    var iframe = embed ? embed.querySelector('iframe') : null;
+    card.classList.remove('active');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    if (embed)  embed.setAttribute('hidden', '');
+    if (iframe) iframe.src = 'about:blank';
+  }
+
+  // Expand a video card and load the YouTube embed.
+  function expandCard(card) {
+    var videoId = card.dataset.videoId;
+    if (!videoId) return;
+    // Only accept well-formed YouTube IDs (11 alphanumeric/dash/underscore chars).
+    if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
+    var toggle = card.querySelector('.video-card__toggle');
+    var embed  = card.querySelector('.video-card__embed');
+    var iframe = embed ? embed.querySelector('iframe') : null;
+    if (!embed || !iframe) return;
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1';
+    embed.removeAttribute('hidden');
+    card.classList.add('active');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  // Click handler — the toggle <button> fires click natively on Enter/Space,
+  // so no separate keydown handler is needed.
+  document.querySelectorAll('.video-strip').forEach(function (strip) {
+    strip.addEventListener('click', function (e) {
+      var card = e.target.closest('.video-card');
+      if (!card) return;
+
+      // Ignore clicks inside the embed area (iframe, watch link).
+      if (e.target.closest('.video-card__embed')) return;
+
+      var wasActive = card.classList.contains('active');
+
+      // Collapse all active cards across all strips.
+      document.querySelectorAll('.video-card.active').forEach(collapseCard);
+
+      if (!wasActive) {
+        expandCard(card);
+      }
+    });
+  });
+});
