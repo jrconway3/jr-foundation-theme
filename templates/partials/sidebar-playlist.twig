@@ -14,7 +14,7 @@
   <ul class="sidebar-video-list">
     {% for video in sidebar_playlist.videos %}
     <li class="sidebar-video-item">
-      <a href="{{ function('esc_url', 'https://www.youtube.com/watch?v=' ~ video.yt_video_id) }}"
+      <a href="{{ function('esc_url', 'https://www.youtube.com/watch?v=' ~ (video.yt_video_id|url_encode)) }}"
          class="sidebar-video-link"
          target="_blank"
          rel="noopener noreferrer">

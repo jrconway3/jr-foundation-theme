@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var embed = card.querySelector('.video-card__embed');
     var iframe = embed ? embed.querySelector('iframe') : null;
     card.classList.remove('active');
+    card.setAttribute('aria-expanded', 'false');
     if (thumb) thumb.removeAttribute('hidden');
     if (embed) embed.setAttribute('hidden', '');
-    if (iframe) iframe.src = '';
+    if (iframe) iframe.src = 'about:blank';
   }
 
   // Expand a video card and load the YouTube embed.
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (thumb) thumb.setAttribute('hidden', '');
     embed.removeAttribute('hidden');
     card.classList.add('active');
+    card.setAttribute('aria-expanded', 'true');
   }
 
   // Click handler — collapse active card first, then expand clicked one if different.
