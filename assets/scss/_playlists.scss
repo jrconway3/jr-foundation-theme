@@ -6,43 +6,57 @@
   padding-top: $gap;
 }
 
+// Carousel card — wraps the video strip and the title footer
 .playlist-carousel {
-  margin-bottom: $gap * 1.5;
+  background: $bg-card;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: $gap;
+
+  // Surface a visible focus ring on the carousel when any child is focused
+  &:focus-within {
+    outline: 2px solid $accent;
+    outline-offset: 0;
+  }
 }
 
-.playlist-carousel-header {
+// Red-tinted footer bar: playlist title + video count
+.playlist-carousel-footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: mix($accent, $bg-surface, 22%);
 }
 
 .playlist-carousel-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: $text;
   text-decoration: none;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-  &:hover { color: $accent; }
+  &:hover { color: #fff; }
 }
 
 .playlist-video-count {
   font-size: 11px;
-  color: $text-muted;
-  background: $bg-card;
-  border: 1px solid $border;
-  padding: 2px 7px;
-  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.55);
   flex-shrink: 0;
 }
 
 // Horizontal scrollable strip of video cards
 .video-strip {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0.5rem 0.25rem;
   scrollbar-width: thin;
   scrollbar-color: $border transparent;
 
@@ -58,7 +72,7 @@
   flex: 0 0 200px;
   border-radius: 3px;
   overflow: hidden;
-  background: $bg-card;
+  background: $bg-surface;
   transition: flex-basis 0.2s ease;
 
   &.active { flex-basis: 340px; }
@@ -91,8 +105,6 @@
     display: block;
     transition: opacity 0.15s;
   }
-
-  // [hidden] is handled by the browser's built-in display:none rule
 }
 
 .video-card__thumb-placeholder {
@@ -127,7 +139,6 @@
 .video-card__embed {
   background: #000;
 
-  // Switch from hidden (display:none) to flex column when active
   &:not([hidden]) {
     display: flex;
     flex-direction: column;
@@ -159,7 +170,7 @@
   font-size: 12px;
   color: $text;
   line-height: 1.4;
-  padding: 0.4rem 0.5rem;
+  padding: 0.35rem 0.4rem;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;

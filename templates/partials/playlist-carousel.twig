@@ -1,11 +1,4 @@
 <div class="playlist-carousel" data-playlist-id="{{ playlist.ID|e('html_attr') }}">
-  <div class="playlist-carousel-header">
-    <a href="{{ function('esc_url', playlist.permalink) }}" class="playlist-carousel-name">{{ playlist.title|e }}</a>
-    {% if playlist.yt_video_count %}
-      <span class="playlist-video-count">{{ playlist.yt_video_count }} videos</span>
-    {% endif %}
-  </div>
-
   {% if playlist.videos %}
   <div class="video-strip">
     {% for video in playlist.videos %}
@@ -20,8 +13,8 @@
           {% else %}
             <div class="video-card__thumb-placeholder"></div>
           {% endif %}
-          {% if video.yt_duration %}
-            <span class="video-card__duration">{{ video.yt_duration|e }}</span>
+          {% if video.yt_duration_formatted %}
+            <span class="video-card__duration">{{ video.yt_duration_formatted|e }}</span>
           {% endif %}
         </div>
         <p class="video-card__title">{{ video.title|e }}</p>
@@ -42,4 +35,10 @@
     {% endfor %}
   </div>
   {% endif %}
+  <div class="playlist-carousel-footer">
+    <a href="{{ function('esc_url', playlist.permalink) }}" class="playlist-carousel-name">{{ playlist.title|e }}</a>
+    {% if playlist.yt_video_count %}
+      <span class="playlist-video-count">{{ playlist.yt_video_count }} videos</span>
+    {% endif %}
+  </div>
 </div>
