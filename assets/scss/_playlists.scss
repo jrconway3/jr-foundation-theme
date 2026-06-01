@@ -12,6 +12,12 @@
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: $gap;
+
+  // Restore visible focus ring for keyboard users, clipped by overflow:hidden otherwise
+  &:focus-within {
+    outline: 2px solid $accent;
+    outline-offset: 0;
+  }
 }
 
 // Red-tinted footer bar: playlist title + video count
@@ -30,6 +36,7 @@
   color: $text;
   text-decoration: none;
   flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
