@@ -41,10 +41,6 @@
   margin: 0 0 0.75rem;
 }
 
-.page-header-content {
-  margin-top: 0.5rem;
-}
-
 // ── Button rows ───────────────────────────────────────────────────────────────
 .btn-row {
   display: flex;
@@ -63,14 +59,13 @@
   font-weight: 500;
   border: 1px solid $border;
   text-decoration: none;
-  cursor: default;
+  cursor: pointer;
   color: $text-muted;
   background: transparent;
 
   &.btn--link {
     color: $accent;
     border-color: $accent;
-    cursor: pointer;
 
     &:hover { background: rgba($accent, 0.08); }
   }
@@ -80,6 +75,7 @@
     border-color: $border;
     font-size: 11px;
     padding: 3px 10px;
+    cursor: default;
   }
 
   // Platform colours

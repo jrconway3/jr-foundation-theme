@@ -6,13 +6,13 @@
 <div class="page-profile-header">
   {% if post.thumbnail %}
   <div class="page-profile-thumb">
-    <img src="{{ post.thumbnail.src('thumbnail') }}" alt="{{ post.thumbnail.alt }}">
+    <img src="{{ function('esc_url', post.thumbnail.src('thumbnail')) }}" alt="{{ post.thumbnail.alt|e('html_attr') }}">
   </div>
   {% endif %}
   <div class="page-profile-info">
-    <h1 class="page-title">{{ post.title }}</h1>
+    <h1 class="page-title">{{ post.title|e }}</h1>
     {% if post.excerpt %}
-    <p class="page-subtitle">{{ post.excerpt|striptags }}</p>
+    <p class="page-subtitle">{{ post.excerpt|striptags|e }}</p>
     {% endif %}
   </div>
 </div>
@@ -42,7 +42,7 @@
       <h2 class="section-label">Featured playlist</h2>
       <div class="playlist-embed">
         <iframe
-          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id }}"
+          src="https://www.youtube.com/embed/videoseries?list={{ featured_playlist_id|url_encode }}"
           allowfullscreen
           title="Featured playlist"
         ></iframe>
