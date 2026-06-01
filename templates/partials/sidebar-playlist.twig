@@ -1,15 +1,6 @@
 <section class="sidebar-section sidebar-playlist-panel">
   <h2 class="section-label">{{ sidebar_playlist.section_title|e }}</h2>
 
-  {% if sidebar_playlist.type == 'playlist' and sidebar_playlist.playlist_name and sidebar_playlist.permalink %}
-  <div class="sidebar-pl-header">
-    <a href="{{ function('esc_url', sidebar_playlist.permalink) }}" class="sidebar-pl-name">{{ sidebar_playlist.playlist_name|e }}</a>
-    {% if sidebar_playlist.yt_video_count %}
-      <span class="sidebar-pl-count">{{ sidebar_playlist.yt_video_count }} videos</span>
-    {% endif %}
-  </div>
-  {% endif %}
-
   {% if sidebar_playlist.videos %}
   <ul class="sidebar-video-list">
     {% for video in sidebar_playlist.videos %}
