@@ -15,8 +15,8 @@
           {% else %}
             <div class="sidebar-video-thumb-placeholder"></div>
           {% endif %}
-          {% if video.yt_duration %}
-            <span class="sidebar-video-duration">{{ video.yt_duration|e }}</span>
+          {% if video.yt_duration_formatted %}
+            <span class="sidebar-video-duration">{{ video.yt_duration_formatted|e }}</span>
           {% endif %}
         </div>
         <p class="sidebar-video-title">{{ video.title|e }}</p>

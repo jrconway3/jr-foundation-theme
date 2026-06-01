@@ -13,8 +13,8 @@
           {% else %}
             <div class="video-card__thumb-placeholder"></div>
           {% endif %}
-          {% if video.yt_duration %}
-            <span class="video-card__duration">{{ video.yt_duration|e }}</span>
+          {% if video.yt_duration_formatted %}
+            <span class="video-card__duration">{{ video.yt_duration_formatted|e }}</span>
           {% endif %}
         </div>
         <p class="video-card__title">{{ video.title|e }}</p>
