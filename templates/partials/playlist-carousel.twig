@@ -9,22 +9,23 @@
   {% if playlist.videos %}
   <div class="video-strip">
     {% for video in playlist.videos %}
-    <div class="video-card"
-         data-video-id="{{ video.yt_video_id|e('html_attr') }}"
-         tabindex="0"
-         role="button"
-         aria-expanded="false"
-         aria-label="{{ ('Play ' ~ video.title)|e('html_attr') }}">
-      <div class="video-card__thumb">
-        {% if video.yt_thumbnail_url %}
-          <img src="{{ function('esc_url', video.yt_thumbnail_url) }}" alt="{{ video.title|e('html_attr') }}" loading="lazy">
-        {% else %}
-          <div class="video-card__thumb-placeholder"></div>
-        {% endif %}
-        {% if video.yt_duration %}
-          <span class="video-card__duration">{{ video.yt_duration|e }}</span>
-        {% endif %}
-      </div>
+    <div class="video-card" data-video-id="{{ video.yt_video_id|e('html_attr') }}">
+      <button class="video-card__toggle"
+              type="button"
+              aria-expanded="false"
+              aria-label="{{ ('Play ' ~ video.title)|e('html_attr') }}">
+        <div class="video-card__thumb">
+          {% if video.yt_thumbnail_url %}
+            <img src="{{ function('esc_url', video.yt_thumbnail_url) }}" alt="{{ video.title|e('html_attr') }}" loading="lazy">
+          {% else %}
+            <div class="video-card__thumb-placeholder"></div>
+          {% endif %}
+          {% if video.yt_duration %}
+            <span class="video-card__duration">{{ video.yt_duration|e }}</span>
+          {% endif %}
+        </div>
+        <p class="video-card__title">{{ video.title|e }}</p>
+      </button>
       <div class="video-card__embed" hidden>
         <iframe
           src="about:blank"
@@ -37,7 +38,6 @@
            target="_blank"
            rel="noopener noreferrer">Watch on YouTube ↗</a>
       </div>
-      <p class="video-card__title">{{ video.title|e }}</p>
     </div>
     {% endfor %}
   </div>

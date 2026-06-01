@@ -43,27 +43,38 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 0.5rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: $border transparent;
 
-  &::-webkit-scrollbar { display: none; }
+  &::-webkit-scrollbar { height: 4px; }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 2px;
+  }
 }
 
 // Individual video card
 .video-card {
   flex: 0 0 200px;
-  cursor: pointer;
   border-radius: 3px;
   overflow: hidden;
   background: $bg-card;
   transition: flex-basis 0.2s ease;
 
-  &:hover .video-card__thumb img { opacity: 0.82; }
+  &.active { flex-basis: 340px; }
+}
 
-  &.active {
-    flex-basis: 340px;
-    cursor: default;
-  }
+// Toggle button — wraps thumb + title; native button handles keyboard activation
+.video-card__toggle {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover .video-card__thumb img { opacity: 0.82; }
 }
 
 // Thumbnail (shown by default, hidden when active)
