@@ -51,6 +51,13 @@ add_filter(
 				'order'      => 'DESC',
 			)
 		);
+
+		if ( is_front_page() ) {
+			$context['home_playlists']   = apply_filters( 'jr_home_playlists', array() );
+			$context['sidebar_playlist'] = apply_filters( 'jr_sidebar_playlist', null );
+		}
+
 		return $context;
 	}
 );
+

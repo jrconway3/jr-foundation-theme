@@ -6,49 +6,152 @@
   padding-top: $gap;
 }
 
-.playlist-row {
-  display: flex;
-  gap: $gap;
-  overflow-x: auto;
-  padding-bottom: 0.75rem;
-  scrollbar-width: thin;
-  scrollbar-color: $border transparent;
+.playlist-carousel {
+  margin-bottom: $gap * 1.5;
+}
 
-  &::-webkit-scrollbar { height: 4px; }
-  &::-webkit-scrollbar-thumb {
-    background: $border;
-    border-radius: 2px;
+.playlist-carousel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.playlist-carousel-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text;
+  text-decoration: none;
+
+  &:hover { color: $accent; }
+}
+
+.playlist-video-count {
+  font-size: 11px;
+  color: $text-muted;
+  background: $bg-card;
+  border: 1px solid $border;
+  padding: 2px 7px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+// Horizontal scrollable strip of video cards
+.video-strip {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+// Individual video card
+.video-card {
+  flex: 0 0 200px;
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+  background: $bg-card;
+  transition: flex-basis 0.2s ease;
+
+  &:hover .video-card__thumb img { opacity: 0.82; }
+
+  &.active {
+    flex-basis: 340px;
+    cursor: default;
   }
 }
 
-.playlist-card {
-  flex: 0 0 400px;
-}
-
-.playlist-card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: $text-muted;
-  margin-bottom: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.playlist-card-embed {
+// Thumbnail (shown by default, hidden when active)
+.video-card__thumb {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
+  aspect-ratio: 16 / 9;
   background: $bg-surface;
-  border-radius: 3px;
+  overflow: hidden;
 
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+  img {
     width: 100%;
     height: 100%;
-    border: none;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.15s;
   }
+
+  // [hidden] is handled by the browser's built-in display:none rule
+}
+
+.video-card__thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  background: $border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '▶';
+    color: $text-hint;
+    font-size: 24px;
+  }
+}
+
+.video-card__duration {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+// Embed area (hidden by default, shown when active)
+.video-card__embed {
+  background: #000;
+
+  // Switch from hidden (display:none) to flex column when active
+  &:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    display: block;
+  }
+}
+
+.watch-on-yt {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  font-size: 11px;
+  color: $accent;
+  background: $bg-card;
+  text-align: center;
+  text-decoration: none;
+  border-top: 1px solid $border;
+  flex-shrink: 0;
+
+  &:hover { text-decoration: underline; }
+}
+
+.video-card__title {
+  font-size: 12px;
+  color: $text;
+  line-height: 1.4;
+  padding: 0.4rem 0.5rem;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

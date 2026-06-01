@@ -1,0 +1,40 @@
+<div class="playlist-carousel" data-playlist-id="{{ playlist.ID }}">
+  <div class="playlist-carousel-header">
+    <a href="{{ playlist.permalink }}" class="playlist-carousel-name">{{ playlist.title }}</a>
+    {% if playlist.yt_video_count %}
+      <span class="playlist-video-count">{{ playlist.yt_video_count }} videos</span>
+    {% endif %}
+  </div>
+
+  {% if playlist.videos %}
+  <div class="video-strip">
+    {% for video in playlist.videos %}
+    <div class="video-card" data-video-id="{{ video.yt_video_id }}" tabindex="0" role="button" aria-label="Play {{ video.title }}">
+      <div class="video-card__thumb">
+        {% if video.yt_thumbnail_url %}
+          <img src="{{ video.yt_thumbnail_url }}" alt="{{ video.title }}" loading="lazy">
+        {% else %}
+          <div class="video-card__thumb-placeholder"></div>
+        {% endif %}
+        {% if video.yt_duration %}
+          <span class="video-card__duration">{{ video.yt_duration }}</span>
+        {% endif %}
+      </div>
+      <div class="video-card__embed" hidden>
+        <iframe
+          src=""
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          title="{{ video.title }}"
+        ></iframe>
+        <a class="watch-on-yt"
+           href="https://www.youtube.com/watch?v={{ video.yt_video_id }}"
+           target="_blank"
+           rel="noopener noreferrer">Watch on YouTube ↗</a>
+      </div>
+      <p class="video-card__title">{{ video.title }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

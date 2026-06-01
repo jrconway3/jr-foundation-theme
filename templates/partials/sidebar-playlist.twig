@@ -1,0 +1,41 @@
+<section class="sidebar-section sidebar-playlist-panel">
+  <h2 class="section-label">{{ sidebar_playlist.section_title }}</h2>
+
+  {% if sidebar_playlist.type == 'playlist' and sidebar_playlist.playlist_name %}
+  <div class="sidebar-pl-header">
+    <a href="{{ sidebar_playlist.permalink }}" class="sidebar-pl-name">{{ sidebar_playlist.playlist_name }}</a>
+    {% if sidebar_playlist.yt_video_count %}
+      <span class="sidebar-pl-count">{{ sidebar_playlist.yt_video_count }} videos</span>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if sidebar_playlist.videos %}
+  <ul class="sidebar-video-list">
+    {% for video in sidebar_playlist.videos %}
+    <li class="sidebar-video-item">
+      <a href="https://www.youtube.com/watch?v={{ video.yt_video_id }}"
+         class="sidebar-video-link"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="sidebar-video-thumb">
+          {% if video.yt_thumbnail_url %}
+            <img src="{{ video.yt_thumbnail_url }}" alt="{{ video.title }}" loading="lazy">
+          {% else %}
+            <div class="sidebar-video-thumb-placeholder"></div>
+          {% endif %}
+          {% if video.yt_duration %}
+            <span class="sidebar-video-duration">{{ video.yt_duration }}</span>
+          {% endif %}
+        </div>
+        <p class="sidebar-video-title">{{ video.title }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if sidebar_playlist.type == 'playlist' and sidebar_playlist.permalink %}
+  <a href="{{ sidebar_playlist.permalink }}" class="sidebar-pl-view-all">View full playlist →</a>
+  {% endif %}
+</section>
