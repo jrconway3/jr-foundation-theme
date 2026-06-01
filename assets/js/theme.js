@@ -16,11 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function expandCard(card) {
     var videoId = card.dataset.videoId;
     if (!videoId) return;
+    // Only accept well-formed YouTube IDs (11 alphanumeric/dash/underscore chars).
+    if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
     var thumb = card.querySelector('.video-card__thumb');
     var embed = card.querySelector('.video-card__embed');
     var iframe = embed ? embed.querySelector('iframe') : null;
     if (!embed || !iframe) return;
-    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1';
     if (thumb) thumb.setAttribute('hidden', '');
     embed.removeAttribute('hidden');
     card.classList.add('active');
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.video-strip').forEach(function (strip) {
     strip.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
+      if (e.target.closest('.video-card__embed')) return;
       var card = e.target.closest('.video-card');
       if (!card) return;
       e.preventDefault();
