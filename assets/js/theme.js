@@ -48,4 +48,47 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // Sidebar video list — expand/collapse inline embed on click.
+  function collapseSidebarItem(item) {
+    var btn    = item.querySelector('.sidebar-video-btn');
+    var embed  = item.querySelector('.sidebar-video-embed');
+    var iframe = embed ? embed.querySelector('iframe') : null;
+    item.classList.remove('active');
+    if (btn)    btn.setAttribute('aria-expanded', 'false');
+    if (embed)  embed.setAttribute('hidden', '');
+    if (iframe) iframe.src = 'about:blank';
+  }
+
+  function expandSidebarItem(item) {
+    var btn     = item.querySelector('.sidebar-video-btn');
+    var videoId = btn ? btn.dataset.videoId : null;
+    if (!videoId || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
+    var embed  = item.querySelector('.sidebar-video-embed');
+    var iframe = embed ? embed.querySelector('iframe') : null;
+    if (!embed || !iframe) return;
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1';
+    embed.removeAttribute('hidden');
+    item.classList.add('active');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+
+  document.querySelectorAll('.sidebar-video-list').forEach(function (list) {
+    list.addEventListener('click', function (e) {
+      var item = e.target.closest('.sidebar-video-item');
+      if (!item) return;
+
+      // Ignore clicks inside the embed area.
+      if (e.target.closest('.sidebar-video-embed')) return;
+
+      var wasActive = item.classList.contains('active');
+
+      // Collapse all active sidebar items across all lists.
+      document.querySelectorAll('.sidebar-video-item.active').forEach(collapseSidebarItem);
+
+      if (!wasActive) {
+        expandSidebarItem(item);
+      }
+    });
+  });
 });

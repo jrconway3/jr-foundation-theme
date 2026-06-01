@@ -5,10 +5,11 @@
   <ul class="sidebar-video-list">
     {% for video in sidebar_playlist.videos %}
     <li class="sidebar-video-item">
-      <a href="{{ function('esc_url', 'https://www.youtube.com/watch?v=' ~ (video.yt_video_id|url_encode)) }}"
-         class="sidebar-video-link"
-         target="_blank"
-         rel="noopener noreferrer">
+      <button class="sidebar-video-btn"
+              type="button"
+              data-video-id="{{ video.yt_video_id|e('html_attr') }}"
+              aria-expanded="false"
+              aria-label="{{ ('Play ' ~ video.title)|e('html_attr') }}">
         <div class="sidebar-video-thumb">
           {% if video.yt_thumbnail_url %}
             <img src="{{ function('esc_url', video.yt_thumbnail_url) }}" alt="{{ video.title|e('html_attr') }}" loading="lazy">
@@ -20,7 +21,19 @@
           {% endif %}
         </div>
         <p class="sidebar-video-title">{{ video.title|e }}</p>
-      </a>
+      </button>
+      <div class="sidebar-video-embed" hidden>
+        <iframe
+          src="about:blank"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          title="{{ video.title|e('html_attr') }}"
+        ></iframe>
+        {% if sidebar_playlist.permalink %}
+        <a class="sidebar-pl-embed-link"
+           href="{{ function('esc_url', sidebar_playlist.permalink) }}">View full playlist →</a>
+        {% endif %}
+      </div>
     </li>
     {% endfor %}
   </ul>

@@ -8,7 +8,7 @@
 
 // Carousel card — wraps the video strip and the title footer
 .playlist-carousel {
-  background: $bg-card;
+  background: mix($accent, $bg-surface, 22%);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: $gap;
@@ -27,7 +27,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.55rem 0.75rem;
-  background: mix($accent, $bg-surface, 22%);
+  background: mix($accent, $bg-surface, 38%);
 }
 
 .playlist-carousel-name {
@@ -76,6 +76,11 @@
   transition: flex-basis 0.2s ease;
 
   &.active { flex-basis: 340px; }
+}
+
+// Hide thumbnail/title when card is active — only the embed is shown
+.video-card.active .video-card__toggle {
+  display: none;
 }
 
 // Toggle button — wraps thumb + title; native button handles keyboard activation
