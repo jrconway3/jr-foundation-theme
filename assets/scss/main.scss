@@ -1,4 +1,7 @@
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@use '@fortawesome/fontawesome-free/scss/fontawesome';
+@use '@fortawesome/fontawesome-free/scss/solid';
+@use '@fortawesome/fontawesome-free/scss/regular';
+@use '@fortawesome/fontawesome-free/scss/brands';
 @use 'reset';
 @use 'typography';
 @use 'layout';
