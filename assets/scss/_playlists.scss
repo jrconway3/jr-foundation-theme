@@ -8,7 +8,7 @@
 
 // Carousel card — wraps the video strip and the title footer
 .playlist-carousel {
-  background: $bg-card;
+  background: mix($accent, $bg-surface, 22%);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: $gap;
@@ -27,7 +27,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.55rem 0.75rem;
-  background: mix($accent, $bg-surface, 22%);
+  background: mix($accent, $bg-surface, 38%);
 }
 
 .playlist-carousel-name {
@@ -76,6 +76,11 @@
   transition: flex-basis 0.2s ease;
 
   &.active { flex-basis: 340px; }
+}
+
+// Hide thumbnail/title when card is active — only the embed is shown
+.video-card.active .video-card__toggle {
+  display: none;
 }
 
 // Toggle button — wraps thumb + title; native button handles keyboard activation
@@ -137,6 +142,7 @@
 
 // Embed area (hidden by default, shown when active)
 .video-card__embed {
+  position: relative;
   background: #000;
 
   &:not([hidden]) {
@@ -150,6 +156,24 @@
     border: none;
     display: block;
   }
+}
+
+// Shared close button — sits in the top-right corner of any embed area
+.video-embed-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.65);
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+
+  &:hover { background: rgba(0, 0, 0, 0.9); }
 }
 
 .watch-on-yt {
