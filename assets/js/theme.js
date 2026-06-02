@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var card = e.target.closest('.video-card');
       if (!card) return;
 
-      // Ignore clicks inside the embed area (iframe, watch link).
-      if (e.target.closest('.video-card__embed')) return;
+      // Let anchor clicks and iframe events pass through without toggling.
+      if (e.target.closest('a') || e.target.tagName === 'IFRAME') return;
 
       var wasActive = card.classList.contains('active');
 
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var item = e.target.closest('.sidebar-video-item');
       if (!item) return;
 
-      // Ignore clicks inside the embed area.
-      if (e.target.closest('.sidebar-video-embed')) return;
+      // Let anchor clicks and iframe events pass through without toggling.
+      if (e.target.closest('a') || e.target.tagName === 'IFRAME') return;
 
       var wasActive = item.classList.contains('active');
 

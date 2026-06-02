@@ -95,6 +95,8 @@
 
 // Inline embed shown on expand
 .sidebar-video-embed {
+  position: relative;
+
   &:not([hidden]) { display: flex; flex-direction: column; }
 
   iframe {
