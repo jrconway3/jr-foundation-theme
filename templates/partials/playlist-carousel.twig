@@ -20,17 +20,19 @@
         <p class="video-card__title">{{ video.title|e }}</p>
       </button>
       <div class="video-card__embed" hidden>
-        <button class="video-embed-close" type="button" aria-label="Close video">✕</button>
         <iframe
           src="about:blank"
           allow="autoplay; encrypted-media"
           allowfullscreen
           title="{{ video.title|e('html_attr') }}"
         ></iframe>
-        <a class="watch-on-yt"
-           href="{{ function('esc_url', 'https://www.youtube.com/watch?v=' ~ (video.yt_video_id|url_encode)) }}"
-           target="_blank"
-           rel="noopener noreferrer">Watch on YouTube ↗</a>
+        <div class="video-embed-footer">
+          <a class="watch-on-yt"
+             href="{{ function('esc_url', 'https://www.youtube.com/watch?v=' ~ (video.yt_video_id|url_encode)) }}"
+             target="_blank"
+             rel="noopener noreferrer">Watch on YouTube ↗</a>
+          <button class="video-embed-close" type="button" aria-label="Close video">✕</button>
+        </div>
       </div>
     </div>
     {% endfor %}

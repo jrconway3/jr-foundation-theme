@@ -176,18 +176,50 @@
   &:hover { background: rgba(0, 0, 0, 0.9); }
 }
 
-.watch-on-yt {
-  display: block;
-  padding: 0.35rem 0.5rem;
-  font-size: 11px;
-  color: $accent;
+// Footer bar: watch link + close button on the same row
+.video-embed-footer {
+  display: flex;
+  align-items: stretch;
   background: $bg-card;
-  text-align: center;
-  text-decoration: none;
   border-top: 1px solid $border;
   flex-shrink: 0;
+}
+
+.watch-on-yt {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  font-size: 11px;
+  color: $accent;
+  text-decoration: none;
 
   &:hover { text-decoration: underline; }
+}
+
+.video-embed-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-left: 1px solid $border;
+  cursor: pointer;
+  color: $text;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0.4rem 0.75rem;
+
+  &:hover {
+    background: rgba($accent, 0.12);
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: -2px;
+  }
 }
 
 .video-card__title {
