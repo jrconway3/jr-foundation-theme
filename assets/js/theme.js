@@ -3,13 +3,16 @@ document.documentElement.classList.add('jr-theme-foundation-ready');
 document.addEventListener('DOMContentLoaded', function () {
   // Collapse an active video card and clear its iframe src.
   function collapseCard(card) {
-    var toggle = card.querySelector('.video-card__toggle');
-    var embed  = card.querySelector('.video-card__embed');
-    var iframe = embed ? embed.querySelector('iframe') : null;
+    var toggle  = card.querySelector('.video-card__toggle');
+    var embed   = card.querySelector('.video-card__embed');
+    var iframe  = embed ? embed.querySelector('iframe') : null;
+    var hadFocus = embed && embed.contains(document.activeElement);
     card.classList.remove('active');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
     if (embed)  embed.setAttribute('hidden', '');
     if (iframe) iframe.src = 'about:blank';
+    // Return focus to the toggle so keyboard users aren't stranded.
+    if (hadFocus && toggle) toggle.focus();
   }
 
   // Expand a video card and load the YouTube embed.
@@ -26,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
     embed.removeAttribute('hidden');
     card.classList.add('active');
     if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    // Move focus to the close button so keyboard users can close or tab into the embed.
+    var closeBtn = embed.querySelector('.video-embed-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   // Click handler — the toggle <button> fires click natively on Enter/Space,
@@ -51,13 +57,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Sidebar video list — expand/collapse inline embed on click.
   function collapseSidebarItem(item) {
-    var btn    = item.querySelector('.sidebar-video-btn');
-    var embed  = item.querySelector('.sidebar-video-embed');
-    var iframe = embed ? embed.querySelector('iframe') : null;
+    var btn      = item.querySelector('.sidebar-video-btn');
+    var embed    = item.querySelector('.sidebar-video-embed');
+    var iframe   = embed ? embed.querySelector('iframe') : null;
+    var hadFocus = embed && embed.contains(document.activeElement);
     item.classList.remove('active');
     if (btn)    btn.setAttribute('aria-expanded', 'false');
     if (embed)  embed.setAttribute('hidden', '');
     if (iframe) iframe.src = 'about:blank';
+    // Return focus to the button so keyboard users aren't stranded.
+    if (hadFocus && btn) btn.focus();
   }
 
   function expandSidebarItem(item) {
@@ -71,6 +80,9 @@ document.addEventListener('DOMContentLoaded', function () {
     embed.removeAttribute('hidden');
     item.classList.add('active');
     if (btn) btn.setAttribute('aria-expanded', 'true');
+    // Move focus to the close button so keyboard users can close or tab into the embed.
+    var closeBtn = embed.querySelector('.video-embed-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   document.querySelectorAll('.sidebar-video-list').forEach(function (list) {
