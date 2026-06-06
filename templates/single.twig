@@ -52,51 +52,53 @@
     {% if post.post_type == 'review' %}
       {% set rating    = post.meta('jr_review_rating') %}
       {% set summary   = post.meta('jr_review_summary') %}
-      {% set platform  = post.meta('jr_review_platform') %}
+      {% set platforms = post.terms('platform') %}
       {% set genre     = post.meta('jr_review_genre') %}
       {% set developer = post.meta('jr_review_developer') %}
       {% set playtime  = post.meta('jr_review_playtime') %}
-      <div class="review-meta-block">
-        {% if rating %}
-          <div class="review-score-row">
-            <div class="review-score-circle">
-              <span class="score-num">{{ rating }}</span>
-              <span class="score-denom">/10</span>
+      {% if rating or summary or platforms or genre or developer or playtime %}
+        <div class="review-meta-block">
+          {% if rating %}
+            <div class="review-score-row">
+              <div class="review-score-circle">
+                <span class="score-num">{{ rating }}</span>
+                <span class="score-denom">/10</span>
+              </div>
+              {% if summary %}
+                <p class="review-score-summary">{{ summary }}</p>
+              {% endif %}
             </div>
-            {% if summary %}
-              <p class="review-score-summary">{{ summary }}</p>
-            {% endif %}
-          </div>
-        {% endif %}
-        {% if platform or genre or developer or playtime %}
-          <div class="review-meta-cols">
-            {% if platform %}
-              <div class="review-meta-item">
-                <span class="review-meta-label">PLATFORM</span>
-                <span class="review-meta-value">{{ platform }}</span>
-              </div>
-            {% endif %}
-            {% if genre %}
-              <div class="review-meta-item">
-                <span class="review-meta-label">GENRE</span>
-                <span class="review-meta-value">{{ genre }}</span>
-              </div>
-            {% endif %}
-            {% if developer %}
-              <div class="review-meta-item">
-                <span class="review-meta-label">DEVELOPER</span>
-                <span class="review-meta-value">{{ developer }}</span>
-              </div>
-            {% endif %}
-            {% if playtime %}
-              <div class="review-meta-item">
-                <span class="review-meta-label">PLAY TIME</span>
-                <span class="review-meta-value">{{ playtime }}</span>
-              </div>
-            {% endif %}
-          </div>
-        {% endif %}
-      </div>
+          {% endif %}
+          {% if platforms or genre or developer or playtime %}
+            <div class="review-meta-cols">
+              {% if platforms %}
+                <div class="review-meta-item">
+                  <span class="review-meta-label">PLATFORM</span>
+                  <span class="review-meta-value">{% for p in platforms %}{{ p.title }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
+                </div>
+              {% endif %}
+              {% if genre %}
+                <div class="review-meta-item">
+                  <span class="review-meta-label">GENRE</span>
+                  <span class="review-meta-value">{{ genre }}</span>
+                </div>
+              {% endif %}
+              {% if developer %}
+                <div class="review-meta-item">
+                  <span class="review-meta-label">DEVELOPER</span>
+                  <span class="review-meta-value">{{ developer }}</span>
+                </div>
+              {% endif %}
+              {% if playtime %}
+                <div class="review-meta-item">
+                  <span class="review-meta-label">PLAY TIME</span>
+                  <span class="review-meta-value">{{ playtime }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
     {% endif %}
 
     {# Post content #}
