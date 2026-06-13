@@ -3,7 +3,8 @@
     <a class="playlist-card__thumb-link" href="{{ function('esc_url', playlist.permalink) }}">
       <img class="playlist-card__thumb"
            src="{{ function('esc_url', playlist.yt_thumbnail_url) }}"
-           alt="{{ playlist.title|e('html_attr') }}">
+           alt="{{ playlist.title|e('html_attr') }}"
+           loading="lazy">
     </a>
   {% endif %}
   <div class="playlist-card__body">

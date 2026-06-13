@@ -42,7 +42,8 @@
               {% if item.post.thumbnail %}
                 <img class="article-card__thumb"
                      src="{{ function('esc_url', item.post.thumbnail.src('thumbnail')) }}"
-                     alt="{{ item.post.thumbnail.alt|e('html_attr') }}">
+                     alt="{{ item.post.thumbnail.alt|e('html_attr') }}"
+                     loading="lazy">
               {% endif %}
               <div class="article-card__body">
                 <h3 class="article-card__title">
