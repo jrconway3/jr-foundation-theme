@@ -59,7 +59,10 @@ function jr_get_term_link( WP_Term $term ): string {
  * @return array Context ready for Timber::render().
  */
 function jr_build_term_context( string $type_meta_key, string $default_type ): array {
-	$queried  = get_queried_object();
+	$queried = get_queried_object();
+	if ( ! $queried instanceof WP_Term ) {
+		return array();
+	}
 	$taxonomy = $queried->taxonomy;
 
 	$term_type = get_term_meta( $queried->term_id, $type_meta_key, true );
