@@ -107,13 +107,55 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 			),
 		)
 	);
+	// Fetch all videos for every playlist in one query, then group in PHP.
+	// This avoids an N+1 pattern (one query per playlist).
+	$videos_by_playlist = array();
+	if ( function_exists( 'jr_content_core_format_video' ) && ! empty( $playlist_q->posts ) ) {
+		$playlist_ids    = wp_list_pluck( $playlist_q->posts, 'ID' );
+		$all_video_posts = get_posts( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query,WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
+			array(
+				'post_type'              => 'video',
+				'posts_per_page'         => -1,
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+				'post_status'            => 'publish',
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'meta_query'             => array(
+					array(
+						'key'     => 'wp_playlist_id',
+						'value'   => $playlist_ids,
+						'compare' => 'IN',
+						'type'    => 'NUMERIC',
+					),
+				),
+			)
+		);
+		foreach ( $all_video_posts as $v ) {
+			$pid = (int) get_post_meta( $v->ID, 'wp_playlist_id', true );
+			if ( ! isset( $videos_by_playlist[ $pid ] ) ) {
+				$videos_by_playlist[ $pid ] = array();
+			}
+			// Keep at most 20 per playlist (results are already date DESC).
+			if ( count( $videos_by_playlist[ $pid ] ) < 20 ) {
+				$videos_by_playlist[ $pid ][] = $v;
+			}
+		}
+	}
+
 	$playlists = array();
 	foreach ( $playlist_q->posts as $p ) {
+		$video_posts = $videos_by_playlist[ $p->ID ] ?? array();
 		$playlists[] = array(
+			'ID'               => $p->ID,
 			'title'            => get_the_title( $p ),
 			'permalink'        => get_permalink( $p ),
+			'yt_playlist_id'   => get_post_meta( $p->ID, 'yt_playlist_id', true ),
 			'yt_thumbnail_url' => get_post_meta( $p->ID, 'yt_thumbnail_url', true ),
 			'yt_video_count'   => (int) get_post_meta( $p->ID, 'yt_video_count', true ),
+			'videos'           => function_exists( 'jr_content_core_format_video' )
+				? array_map( 'jr_content_core_format_video', $video_posts )
+				: array(),
 		);
 	}
 
