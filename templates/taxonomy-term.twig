@@ -1,0 +1,70 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div class="taxonomy-archive">
+
+  <header class="term-header">
+    <h1>{{ term.name }}</h1>
+    {% if term.description %}
+      <p class="term-description">{{ term.description }}</p>
+    {% endif %}
+  </header>
+
+  {% if children %}
+    <ul class="subcategory-tabs">
+      {% for child in children %}
+        <li class="subcategory-tab">
+          <a href="{{ child.url }}">{{ child.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="taxonomy-shell">
+
+    <section class="taxonomy-main">
+      <h2 class="section-label">Playlists</h2>
+      {% if playlists %}
+        {% for playlist in playlists %}
+          {% include 'partials/playlist-card.twig' with { playlist: playlist } %}
+        {% endfor %}
+      {% else %}
+        <div class="empty-state">No playlists yet.</div>
+      {% endif %}
+    </section>
+
+    <aside class="taxonomy-sidebar">
+      <h2 class="section-label">Articles &amp; Reviews</h2>
+      {% if posts %}
+        <ul class="article-card-list">
+          {% for item in posts %}
+            <li class="article-card">
+              {% if item.post.thumbnail %}
+                <img class="article-card__thumb"
+                     src="{{ item.post.thumbnail.src('thumbnail') }}"
+                     alt="{{ item.post.thumbnail.alt }}">
+              {% endif %}
+              <div class="article-card__body">
+                <h3 class="article-card__title">
+                  <a href="{{ item.post.link }}">{{ item.post.title }}</a>
+                  {% if item.is_review and item.review_rating %}
+                    <span class="rating-badge">{{ item.review_rating }}</span>
+                  {% endif %}
+                </h3>
+                <time class="article-card__date"
+                      datetime="{{ item.post.date('Y-m-d') }}">
+                  {{ item.post.date('M j, Y') }}
+                </time>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty-state">No articles yet.</div>
+      {% endif %}
+    </aside>
+
+  </div>
+
+</div>
+{% endblock %}

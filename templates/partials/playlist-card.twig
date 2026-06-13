@@ -1,0 +1,19 @@
+<article class="playlist-card">
+  {% if playlist.yt_thumbnail_url %}
+    <a class="playlist-card__thumb-link" href="{{ playlist.permalink }}">
+      <img class="playlist-card__thumb"
+           src="{{ playlist.yt_thumbnail_url }}"
+           alt="{{ playlist.title }}">
+    </a>
+  {% endif %}
+  <div class="playlist-card__body">
+    <h3 class="playlist-card__title">
+      <a href="{{ playlist.permalink }}">{{ playlist.title }}</a>
+    </h3>
+    {% if playlist.yt_video_count %}
+      <p class="playlist-card__count">
+        {{ playlist.yt_video_count }} video{{ playlist.yt_video_count == 1 ? '' : 's' }}
+      </p>
+    {% endif %}
+  </div>
+</article>
