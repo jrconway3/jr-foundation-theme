@@ -1,14 +1,14 @@
 <article class="playlist-card">
   {% if playlist.yt_thumbnail_url %}
-    <a class="playlist-card__thumb-link" href="{{ playlist.permalink }}">
+    <a class="playlist-card__thumb-link" href="{{ function('esc_url', playlist.permalink) }}">
       <img class="playlist-card__thumb"
-           src="{{ playlist.yt_thumbnail_url }}"
-           alt="{{ playlist.title }}">
+           src="{{ function('esc_url', playlist.yt_thumbnail_url) }}"
+           alt="{{ playlist.title|e('html_attr') }}">
     </a>
   {% endif %}
   <div class="playlist-card__body">
     <h3 class="playlist-card__title">
-      <a href="{{ playlist.permalink }}">{{ playlist.title }}</a>
+      <a href="{{ function('esc_url', playlist.permalink) }}">{{ playlist.title|e }}</a>
     </h3>
     {% if playlist.yt_video_count %}
       <p class="playlist-card__count">

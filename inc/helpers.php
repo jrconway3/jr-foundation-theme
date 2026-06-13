@@ -30,7 +30,7 @@ function jr_get_term_link( WP_Term $term ): string {
 	$base = ( 'games' === $taxonomy ) ? 'game' : 'platform';
 
 	if ( ! $term->parent ) {
-		return home_url( "/{$base}/{$term->slug}/" );
+		return user_trailingslashit( home_url( "/{$base}/{$term->slug}" ), 'category' );
 	}
 
 	$ancestors = get_ancestors( $term->term_id, $taxonomy, 'taxonomy' );
@@ -39,13 +39,16 @@ function jr_get_term_link( WP_Term $term ): string {
 	$slugs = array();
 	foreach ( $ancestors as $ancestor_id ) {
 		$ancestor = get_term( $ancestor_id, $taxonomy );
-		if ( $ancestor && ! is_wp_error( $ancestor ) ) {
-			$slugs[] = $ancestor->slug;
+		if ( ! $ancestor || is_wp_error( $ancestor ) ) {
+			// Ancestor is gone — building a partial path would produce a broken URL.
+			$link = get_term_link( $term );
+			return is_wp_error( $link ) ? '' : $link;
 		}
+		$slugs[] = $ancestor->slug;
 	}
 	$slugs[] = $term->slug;
 
-	return home_url( "/{$base}/" . implode( '/', $slugs ) . '/' );
+	return user_trailingslashit( home_url( "/{$base}/" . implode( '/', $slugs ) ), 'category' );
 }
 
 /**
@@ -88,7 +91,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 		array(
 			'post_type'      => 'playlist',
 			'post_status'    => 'publish',
-			'posts_per_page' => -1,
+			'posts_per_page' => 50,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 			'tax_query'      => array(
@@ -115,7 +118,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 		array(
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
-			'posts_per_page' => -1,
+			'posts_per_page' => 50,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 			'tax_query'      => array(
