@@ -17,6 +17,7 @@ if ( file_exists( $jr_theme_foundation_autoload ) ) {
 $jr_theme_foundation_includes = array(
 	__DIR__ . '/inc/helpers.php',
 	__DIR__ . '/inc/theme.php',
+	__DIR__ . '/inc/menus.php',
 	__DIR__ . '/inc/enqueue.php',
 	__DIR__ . '/inc/timber.php',
 );

@@ -1,0 +1,27 @@
+{% if games_menu %}
+<section class="sidebar-section">
+  <h2 class="section-label">My games</h2>
+  <ul class="game-row-list">
+    {% for item in games_menu.items %}
+    <li class="game-row">
+      <a class="game-row-link" href="{{ item.link }}">
+        <span class="game-row-icon">🎮</span>
+        <span class="game-row-name">{{ item.title }}</span>
+        {% if item.term_count is not null %}
+        <span class="game-row-count">{{ item.term_count }}</span>
+        {% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% elseif games_list %}
+<section class="sidebar-section">
+  <h2 class="section-label">My games</h2>
+  <ul class="game-row-list">
+    {% for game in games_list %}
+      {% include 'partials/game-row.twig' %}
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
