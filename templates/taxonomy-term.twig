@@ -6,7 +6,7 @@
   <header class="term-header">
     <h1>{{ term.name|e }}</h1>
     {% if term.description %}
-      <div class="term-description">{{ term.description|raw }}</div>
+      <div class="term-description">{{ function('wp_kses_post', term.description)|raw }}</div>
     {% endif %}
   </header>
 

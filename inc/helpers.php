@@ -117,7 +117,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 	// Regular posts tagged with this term
 	$posts_q = new WP_Query( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		array(
-			'post_type'      => 'post',
+			'post_type'      => array( 'post', 'review' ),
 			'post_status'    => 'publish',
 			'posts_per_page' => 50,
 			'no_found_rows'  => true,
@@ -134,8 +134,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 	);
 	$posts = array();
 	foreach ( $posts_q->posts as $p ) {
-		$cats      = wp_get_post_categories( $p->ID, array( 'fields' => 'slugs' ) );
-		$is_review = in_array( 'reviews', (array) $cats, true );
+		$is_review = 'review' === $p->post_type;
 		$posts[]   = array(
 			'post'            => class_exists( '\\Timber\\Timber' ) ? \Timber\Timber::get_post( $p ) : null,
 			'is_review'       => $is_review,
