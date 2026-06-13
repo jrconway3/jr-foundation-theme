@@ -92,6 +92,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 			'post_type'      => 'playlist',
 			'post_status'    => 'publish',
 			'posts_per_page' => 50,
+			'no_found_rows'  => true,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 			'tax_query'      => array(
@@ -119,6 +120,7 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
 			'posts_per_page' => 50,
+			'no_found_rows'  => true,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 			'tax_query'      => array(

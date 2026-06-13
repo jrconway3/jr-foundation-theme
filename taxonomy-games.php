@@ -13,4 +13,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-jr_theme_foundation_render_template( 'taxonomy-term.twig', jr_build_term_context( 'game_type', 'game' ) );
+$context = class_exists( '\\Timber\\Timber' ) ? jr_build_term_context( 'game_type', 'game' ) : array();
+jr_theme_foundation_render_template( 'taxonomy-term.twig', $context );
