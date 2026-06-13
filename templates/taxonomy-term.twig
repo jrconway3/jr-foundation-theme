@@ -26,7 +26,7 @@
       <h2 class="section-label">Playlists</h2>
       {% if playlists %}
         {% for playlist in playlists %}
-          {% include 'partials/playlist-card.twig' with { playlist: playlist } %}
+          {% include 'partials/playlist-carousel.twig' %}
         {% endfor %}
       {% else %}
         <div class="empty-state">No playlists yet.</div>

@@ -109,11 +109,33 @@ function jr_build_term_context( string $type_meta_key, string $default_type ): a
 	);
 	$playlists = array();
 	foreach ( $playlist_q->posts as $p ) {
+		$video_posts = get_posts( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			array(
+				'post_type'              => 'video',
+				'posts_per_page'         => 20,
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+				'post_status'            => 'publish',
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'meta_query'             => array(
+					array(
+						'key'   => 'wp_playlist_id',
+						'value' => $p->ID,
+					),
+				),
+			)
+		);
 		$playlists[] = array(
+			'ID'               => $p->ID,
 			'title'            => get_the_title( $p ),
 			'permalink'        => get_permalink( $p ),
+			'yt_playlist_id'   => get_post_meta( $p->ID, 'yt_playlist_id', true ),
 			'yt_thumbnail_url' => get_post_meta( $p->ID, 'yt_thumbnail_url', true ),
 			'yt_video_count'   => (int) get_post_meta( $p->ID, 'yt_video_count', true ),
+			'videos'           => function_exists( 'jr_content_core_format_video' )
+				? array_map( 'jr_content_core_format_video', $video_posts )
+				: array(),
 		);
 	}
 
