@@ -104,16 +104,7 @@
       {% include 'partials/sidebar-playlist.twig' %}
     {% endif %}
 
-{% if games_list %}
-    <section class="sidebar-section">
-      <h2 class="section-label">My games</h2>
-      <ul class="game-row-list">
-        {% for game in games_list %}
-          {% include 'partials/game-row.twig' %}
-        {% endfor %}
-      </ul>
-    </section>
-    {% endif %}
+{% include 'partials/sidebar-games.twig' %}
 
   </aside>
 </div>

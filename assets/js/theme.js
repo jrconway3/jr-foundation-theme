@@ -1,6 +1,18 @@
 document.documentElement.classList.add('jr-theme-foundation-ready');
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Mobile hamburger — toggle primary nav visibility.
+  var hamburger = document.querySelector('.nav-hamburger');
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      var next = !expanded;
+      this.setAttribute('aria-expanded', String(next));
+      this.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', next);
+    });
+  }
+
   // Collapse an active video card and clear its iframe src.
   function collapseCard(card) {
     var toggle  = card.querySelector('.video-card__toggle');

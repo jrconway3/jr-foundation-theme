@@ -41,6 +41,24 @@ add_filter(
 			'subscriber_count' => (int) get_option( 'jr_yt_subscriber_count', 0 ),
 			'video_count'      => (int) get_option( 'jr_yt_video_count', 0 ),
 		);
+		$sidebar_games_id = ! empty( $nav_locations['sidebar_games'] ) ? (int) $nav_locations['sidebar_games'] : 0;
+		if ( $sidebar_games_id ) {
+			$sidebar_games_menu = \Timber\Timber::get_menu( $sidebar_games_id );
+			if ( $sidebar_games_menu ) {
+				foreach ( $sidebar_games_menu->items as $item ) {
+					if ( 'taxonomy' === $item->type ) {
+						$term             = get_term( (int) $item->object_id );
+						$item->term_count = ( $term && ! is_wp_error( $term ) ) ? (int) $term->count : 0;
+					} else {
+						$item->term_count = null;
+					}
+				}
+			}
+			$context['games_menu'] = $sidebar_games_menu;
+		} else {
+			$context['games_menu'] = null;
+		}
+
 		$context['games_list']  = \Timber\Timber::get_terms(
 			array(
 				'taxonomy'   => 'games',

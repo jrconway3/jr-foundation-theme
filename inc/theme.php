@@ -30,9 +30,10 @@ add_action(
 
 		register_nav_menus(
 			array(
-				'primary' => __( 'Primary Menu', 'jr-theme-foundation' ),
-				'footer'  => __( 'Footer Menu', 'jr-theme-foundation' ),
-				'social'  => __( 'Social Links', 'jr-theme-foundation' ),
+				'primary'       => __( 'Primary Menu', 'jr-theme-foundation' ),
+				'footer'        => __( 'Footer Menu', 'jr-theme-foundation' ),
+				'social'        => __( 'Social Links', 'jr-theme-foundation' ),
+				'sidebar_games' => __( 'Sidebar Menu', 'jr-theme-foundation' ),
 			)
 		);
 	}
