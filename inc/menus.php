@@ -20,7 +20,7 @@ add_filter(
 			if ( isset( $item->object ) && 'social' === $item->object ) {
 				$url = get_post_meta( (int) $item->object_id, 'jrblog_social_url', true );
 				if ( $url ) {
-					$item->url = esc_url( $url );
+					$item->url = esc_url_raw( $url );
 				}
 			}
 		}

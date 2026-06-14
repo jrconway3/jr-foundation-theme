@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
   if (hamburger) {
     hamburger.addEventListener('click', function () {
       var expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', String(!expanded));
-      document.body.classList.toggle('nav-open', !expanded);
+      var next = !expanded;
+      this.setAttribute('aria-expanded', String(next));
+      this.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', next);
     });
   }
 

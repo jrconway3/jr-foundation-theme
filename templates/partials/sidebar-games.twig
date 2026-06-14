@@ -5,7 +5,7 @@
     {% for item in games_menu.items %}
     <li class="game-row">
       <a class="game-row-link" href="{{ item.link }}">
-        <span class="game-row-icon">🎮</span>
+        <span class="game-row-icon" aria-hidden="true">🎮</span>
         <span class="game-row-name">{{ item.title }}</span>
         {% if item.term_count is not null %}
         <span class="game-row-count">{{ item.term_count }}</span>
