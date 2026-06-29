@@ -45,3 +45,32 @@ p {
 a:hover {
   color: $accent;
 }
+
+.wp-block-list {
+  list-style: disc;
+  padding-left: 1.5em;
+
+  .wp-block-list {
+    list-style: circle;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+
+  &.is-two-columns {
+    columns: 2;
+    column-gap: 2em;
+
+    > li {
+      break-inside: avoid;
+    }
+  }
+
+  &.is-three-columns {
+    columns: 3;
+    column-gap: 2em;
+
+    > li {
+      break-inside: avoid;
+    }
+  }
+}
